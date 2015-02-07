@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sform"uri="http://www.springframework.org/tags/form"%>
+
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -48,15 +53,15 @@
           <a class="navbar-brand" href="#">Project name</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" action="login">
+          <sform:form class="navbar-form navbar-right" action="login" method="POST" modelAttribute="login">
             <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
+              <sform:input type="text" placeholder="Email" class="form-control" path="userName"></sform:input>
             </div>
             <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
+              <sform:input type="password" placeholder="Password" class="form-control" path="password"></sform:input>
             </div>
             <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
+          </sform:form>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
@@ -89,7 +94,7 @@
       <hr>
 
       <footer>
-        <p>&copy; QK Learning by doing it! 2015</p>
+        <p>&copy; QK Learning by doing it! ${serverTime}</p>
       </footer>
     </div> <!-- /container -->
 

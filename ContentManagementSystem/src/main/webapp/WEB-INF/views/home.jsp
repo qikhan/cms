@@ -53,6 +53,7 @@
           <a class="navbar-brand" href="#">Project name</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+         <c:if test="${authValid ==null || authValid==false}">
           <sform:form class="navbar-form navbar-right" action="login" method="POST" modelAttribute="login">
             <div class="form-group">
               <sform:input type="text" placeholder="Email" class="form-control" path="userName"></sform:input>
@@ -62,6 +63,7 @@
             </div>
             <button type="submit" class="btn btn-success">Sign in</button>
           </sform:form>
+          </c:if>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>

@@ -29,11 +29,29 @@ public class LoginController {
 
 		logger.info("Login authentication");
 
-		ModelAndView modelAndView = new ModelAndView("home", "login", loginVo);
+		ModelAndView modelAndView = new ModelAndView("home", "login",
+				new LoginVo());
 
 		Map<String, Object> model = modelAndView.getModel();
-		model.put("serverTime", "Name: " + loginVo.getUserName());
+		if (loginVo.getUserName() != null && loginVo.getPassword() != null) {
+			model.put("userName", loginVo.getUserName());
+		}
 		model.put("authValid", true);
+
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public ModelAndView logout() {
+
+		logger.info("Login authentication");
+
+		ModelAndView modelAndView = new ModelAndView("home", "login",
+				new LoginVo());
+
+		Map<String, Object> model = modelAndView.getModel();
+		model.put("userName", null);
+		model.put("authValid", false);
 
 		return modelAndView;
 	}

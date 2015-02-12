@@ -1,5 +1,7 @@
 package com.qk.cms.controllers;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -27,7 +29,8 @@ public class HomeController {
 
 		ModelAndView modelAndView = new ModelAndView("home", "login",
 				new LoginVo());
-
+		Map<String, Object> model = modelAndView.getModel();
+		model.put("loginStyle", "btn-success");
 		return modelAndView;
 	}
 

@@ -10,11 +10,13 @@
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/security
-        http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+        http://www.springframework.org/schema/security/spring-security-3.2.xsd"
+>
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- Spring security configuration -->
-
+	<!-- This allows configuration based user profile creation -->
+	<!-- 
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:user-service>
@@ -23,10 +25,13 @@
 			</security:user-service>
 		</security:authentication-provider>
 	</security:authentication-manager>
-
 	<security:http auto-config='true'>
 		<security:intercept-url pattern="/**" access="ROLE_USER" />
+		-->
+		<!-- this allows specific url to be https secured -->
+		<!-- 
+		<intercept-url pattern="/secure/**" access="ROLE_USER" requires-channel="https"/>
 	</security:http>
+ 	-->
 
-		
 </beans:beans>

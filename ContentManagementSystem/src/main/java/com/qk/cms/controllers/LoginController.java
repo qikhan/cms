@@ -2,6 +2,8 @@ package com.qk.cms.controllers;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,18 +27,24 @@ public class LoginController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(@ModelAttribute("login") LoginVo loginVo) {
+	public ModelAndView login(@ModelAttribute("login") LoginVo loginVo,
+			HttpSession session) {
 
 		logger.info("Login authentication");
 
 		ModelAndView modelAndView = new ModelAndView("home", "login",
 				new LoginVo());
-
+		System.out.println(session.getId());
 		Map<String, Object> model = modelAndView.getModel();
-		if (loginVo.getUserName() != null && loginVo.getPassword() != null) {
+		if (loginVo.getUserName().isEmpty() == false
+				&& loginVo.getPassword().isEmpty() == false) {
 			model.put("userName", loginVo.getUserName());
+			model.put("authValid", true);
+		} else {
+			model.put("loginMessage", "Invalid login information.");
+			model.put("loginStyle", "btn-danger");
+			model.put("login", loginVo);
 		}
-		model.put("authValid", true);
 
 		return modelAndView;
 	}
@@ -52,7 +60,7 @@ public class LoginController {
 		Map<String, Object> model = modelAndView.getModel();
 		model.put("userName", null);
 		model.put("authValid", false);
-
+		model.put("loginStyle", "btn-success");
 		return modelAndView;
 	}
 }

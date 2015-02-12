@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="stags" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form"%>
-
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -12,21 +11,14 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!-- link rel="icon" href="/ContentManagementSystem/resources/scripts/lib/bootstrap/favicon.ico">  -->
-
 <title>Your Ultimate Content Management Site</title>
-
 <!-- Bootstrap core CSS -->
-<link
-	href="/ContentManagementSystem/resources/scripts/lib/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-
+<link href="/ContentManagementSystem/resources/scripts/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom styles for this template -->
 <!-- link href="jumbotron.css" rel="stylesheet">  -->
-
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="/ContentManagementSystem/resources/scripts/lib/bootstrap/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <!-- script src="/ContentManagementSystem/resources/scripts/lib/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>  -->
-
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -35,49 +27,40 @@
 <!-- Bootstrap core JavaScript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script
-	src="/ContentManagementSystem/resources/scripts/lib/jquery/jquery-2.1.3.min.js"></script>
-<script
-	src="/ContentManagementSystem/resources/scripts/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="/ContentManagementSystem/resources/scripts/lib/jquery/jquery-2.1.3.min.js"></script>
+<script src="/ContentManagementSystem/resources/scripts/lib/bootstrap/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <!-- script src="/ContentManagementSystem/resources/scripts/lib/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>  -->
 </head>
-
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+					aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+					<span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="#">Project name</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<c:choose>
 					<c:when test="${authValid ==null || authValid==false}">
-						<sform:form class="navbar-form navbar-right" action="login"
-							method="POST" modelAttribute="login">
+						<sform:form class="navbar-form navbar-right" action="login" method="POST" modelAttribute="login">
 							<div class="form-group">
-								<sform:input type="text" placeholder="Email"
-									class="form-control" path="userName"></sform:input>
+								<sform:input type="text" placeholder="User Name" class="form-control" path="userName" value="${login.userName}"></sform:input>
 							</div>
 							<div class="form-group">
-								<sform:input type="password" placeholder="Password"
-									class="form-control" path="password"></sform:input>
+								<sform:input type="password" placeholder="Password" class="form-control" path="password"></sform:input>
 							</div>
-							<button type="submit" class="btn btn-success">Login</button>
+							<button type="submit" class="btn ${loginStyle}" data-toggle="tooltip" title="${loginMessage}">Login</button>
 						</sform:form>
 					</c:when>
 					<c:otherwise>
 						<ul class="nav navbar-nav">
 							<li class="active"><a href="#">Home</a></li>
-							<li class="dropdown active"><a href="#"
-								class="dropdown-toggle" data-toggle="dropdown" role="button"
-								aria-expanded="false">Tools <span class="caret"></span>
+							<li class="dropdown active"><a href="#" class="dropdown-toggle" data-toggle="dropdown"
+								role="button" aria-expanded="false">Tools <span class="caret"></span>
 							</a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#">Action</a></li>
@@ -98,47 +81,39 @@
 			<!--/.navbar-collapse -->
 		</div>
 	</nav>
-
 	<!-- Main jumbotron for a primary marketing message or call to action -->
 	<div class="jumbotron">
 		<div class="container">
 			<h1>Hello, world!</h1>
-			<p>This is a template for a simple marketing or informational
-				website. It includes a large callout called a jumbotron and three
-				supporting pieces of content. Use it as a starting point to create
-				something more unique.</p>
+			<p>This is a template for a simple marketing or informational website. It includes a large callout
+				called a jumbotron and three supporting pieces of content. Use it as a starting point to create something
+				more unique.</p>
 			<p>
-				<a class="btn btn-primary btn-lg" href="#" role="button">Learn
-					more &raquo;</a>
+				<a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a>
 			</p>
 		</div>
 	</div>
-
 	<div class="container">
 		<!-- Example row of columns -->
 		<div class="row">
 			<div class="col-md-4">
 				<h2>Create an Publisher Account</h2>
-				<p>Manage your content and publish them at ease. Enable targeted
-					content push. Enable e-commerce on any content.</p>
+				<p>Manage your content and publish them at ease. Enable targeted content push. Enable e-commerce on
+					any content.</p>
 				<p>
-					<a class="btn btn-default" href="#" role="button">View details
-						&raquo;</a>
+					<a class="btn btn-default" href="#" role="button">View details &raquo;</a>
 				</p>
 			</div>
 			<div class="col-md-4">
 				<h2>Create an Reader Account</h2>
-				<p>Open the door to explore limitless content of all kind.
-					Receive exclusive offers and access to content of your interest.</p>
+				<p>Open the door to explore limitless content of all kind. Receive exclusive offers and access to
+					content of your interest.</p>
 				<p>
-					<a class="btn btn-default" href="#" role="button">View details
-						&raquo;</a>
+					<a class="btn btn-default" href="#" role="button">View details &raquo;</a>
 				</p>
 			</div>
 		</div>
-
 		<hr>
-
 		<footer>
 			<div class="container">
 				<c:if test="${userName != null}">

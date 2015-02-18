@@ -1,6 +1,7 @@
 package com.qk.cms.controllers;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.qk.cms.auth.SessionNotFoundException;
+import com.qk.cms.auth.UserSessionManager;
 import com.qk.cms.vo.LoginVo;
 
 /**
@@ -25,21 +28,28 @@ public class LoginController {
 
 	/**
 	 * Simply selects the home view to render by returning its name.
+	 * 
+	 * @throws SessionNotFoundException
+	 * @throws ExecutionException
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(@ModelAttribute("login") LoginVo loginVo,
-			HttpSession session) {
+			HttpSession session) throws ExecutionException,
+			SessionNotFoundException {
 
 		logger.info("Login authentication");
 
 		ModelAndView modelAndView = new ModelAndView("home", "login",
 				new LoginVo());
-		System.out.println(session.getId());
 		Map<String, Object> model = modelAndView.getModel();
 		if (loginVo.getUserName().isEmpty() == false
 				&& loginVo.getPassword().isEmpty() == false) {
-			model.put("userName", loginVo.getUserName());
-			model.put("authValid", true);
+
+			loginVo.setAuthValid(performAuthentication(loginVo));
+			loginVo.updateModel(model);
+			UserSessionManager.getInstance().addUserSession(session.getId(),
+					loginVo);
+
 		} else {
 			model.put("loginMessage", "Invalid login information.");
 			model.put("loginStyle", "btn-danger");
@@ -47,6 +57,11 @@ public class LoginController {
 		}
 
 		return modelAndView;
+	}
+
+	private boolean performAuthentication(LoginVo loginVo) {
+		// TODO query the DB to acquire authentication
+		return true;
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

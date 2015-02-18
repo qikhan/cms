@@ -39,6 +39,10 @@ public class UserSessionManager {
 		return addUserSession(sessionId, null);
 	}
 
+	public void invalidateUserSession(final String sessionId) {
+		userSessions.invalidate(sessionId);
+	}
+
 	public UserSession addUserSession(final String sessionId,
 			final LoginVo loginVo) throws ExecutionException,
 			SessionNotFoundException {

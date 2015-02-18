@@ -65,13 +65,13 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public ModelAndView logout() {
+	public ModelAndView logout(HttpSession session) {
 
 		logger.info("Login authentication");
 
 		ModelAndView modelAndView = new ModelAndView("home", "login",
 				new LoginVo());
-
+		UserSessionManager.getInstance().invalidateUserSession(session.getId());
 		Map<String, Object> model = modelAndView.getModel();
 		model.put("userName", null);
 		model.put("authValid", false);

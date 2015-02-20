@@ -20,7 +20,7 @@ public class UserSessionManager {
 				@Override
 				public void onRemoval(
 						RemovalNotification<String, UserSession> removal) {
-					UserSession userSession = removal.getValue();
+					// UserSession userSession = removal.getValue();
 					// session information is persisted to the DB then can be
 					// used to delete the DB entry
 				}

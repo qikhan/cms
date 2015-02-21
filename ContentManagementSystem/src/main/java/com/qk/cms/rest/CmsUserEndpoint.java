@@ -3,7 +3,6 @@ package com.qk.cms.rest;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -21,7 +20,6 @@ import javax.ws.rs.core.UriBuilder;
 
 import com.qk.cms.entity.CmsUser;
 
-@RequestScoped
 @Path("/")
 public class CmsUserEndpoint {
 

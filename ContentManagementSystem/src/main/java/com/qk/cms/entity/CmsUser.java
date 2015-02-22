@@ -4,12 +4,14 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity implementation class for Entity: CmsUser
  *
  */
 @Entity
+@XmlRootElement(name = "user")
 public class CmsUser implements Serializable {
 
 	private static final long serialVersionUID = -5309476787818180282L;

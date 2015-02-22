@@ -14,7 +14,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
@@ -64,13 +63,7 @@ public class CmsUserEndpoint {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 
-		return Response.ok(cmsuser, getRequestedMediaType()).build();
-	}
-
-	private MediaType getRequestedMediaType() {
-		return request.getHeader("Content-Type") != null
-				&& request.getHeader("Content-Type").equals("application/json") ? MediaType.APPLICATION_JSON_TYPE
-				: MediaType.APPLICATION_XML_TYPE;
+		return Response.ok(cmsuser).build();
 	}
 
 	private CmsUser getCmsUser(final String userName) {

@@ -40,12 +40,12 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
-	<!-- RESTeasy servlet configuration -->
 	<servlet-mapping>
 		<servlet-name>CMSPortal</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
+	<!-- RESTeasy servlet configuration -->
 	<context-param>
 		<param-name>resteasy.scan</param-name>
 		<param-value>true</param-value>

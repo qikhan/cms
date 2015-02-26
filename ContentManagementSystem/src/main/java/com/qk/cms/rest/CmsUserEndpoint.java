@@ -67,8 +67,8 @@ public class CmsUserEndpoint {
 	}
 
 	private CmsUser getCmsUser(final String userName) {
-		return new CmsUser(userName, "qikhan", "qikhan@gmail.com", "Quamrul",
-				"Khan");
+		return new CmsUser(userName, userName + "XX", "qikhan@gmail.com",
+				"Quamrul", "Khan");
 	}
 
 	@GET

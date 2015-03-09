@@ -32,16 +32,16 @@
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <!-- script src="/ContentManagementSystem/resources/scripts/lib/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>  -->
 <script>
-$(document).ready(function() {
+	$(document).ready(function() {
 
-	var authValid = "${authValid}";
-	if (authValid == "false") {
-		$(".navbar-header button").click();
-	}
-});
+		var authValid = "${authValid}";
+		if (authValid == "false") {
+			$(".navbar-header button").click();
+		}
+	});
 </script>
 </head>
-<body >
+<body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
@@ -57,7 +57,8 @@ $(document).ready(function() {
 					<c:when test="${authValid==null || authValid==false}">
 						<sform:form class="navbar-form navbar-right" action="login" method="POST" modelAttribute="login">
 							<div class="form-group">
-								<sform:input type="text" placeholder="User Name" class="form-control" path="userName" value="${login.userName}"></sform:input>
+								<sform:input type="text" placeholder="User Name" class="form-control" path="userName"
+									value="${login.userName}"></sform:input>
 							</div>
 							<div class="form-group">
 								<sform:input type="password" placeholder="Password" class="form-control" path="password"></sform:input>
@@ -125,9 +126,14 @@ $(document).ready(function() {
 		<hr>
 		<footer>
 			<div class="container">
-				<c:if test="${userName != null}">
-					<p>You are : ${userName}</p>
-				</c:if>
+				<c:choose>
+					<c:when test="${userName != null}">
+						<p>You are : ${userName}</p>
+					</c:when>
+					<c:otherwise>
+				        <a href="register">Register</a>
+				    </c:otherwise>
+				</c:choose>
 				<p>&copy; QK Learning by doing it!</p>
 			</div>
 		</footer>

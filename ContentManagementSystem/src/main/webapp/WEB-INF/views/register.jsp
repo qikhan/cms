@@ -13,10 +13,29 @@
 </head>
 <body>
 
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+				aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">CMS</a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="/ContentManagementSystem">Home</a></li>
+					</ul>
+		</div>
+		<!--/.navbar-collapse -->
+	</div>
+</nav>
 <div class="container">
 
-<div class="page-header">
-    <h1>Registration form <small>A Bootstrap template showing a registration form with standard fields</small></h1>
+<div class="page-header" style="display: block;">
+    <h1>Welcome to CMS Registration</h1>
+    <small>Please fill all required field. You will receive an email confirmation.</small>
 </div>
 
 <!-- Registration form - START -->
@@ -56,7 +75,9 @@
                 <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right">
             </div>
         </form>
-        <div class="col-lg-5 col-md-push-1">
+    </div>
+    <div class="row">    
+    	<div class="col-lg-5 col-md-push-1" style="display:block">
             <div class="col-md-12">
                 <div class="alert alert-success">
                     <strong><span class="glyphicon glyphicon-ok"></span> Success! Message sent.</strong>

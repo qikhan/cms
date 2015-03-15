@@ -19,8 +19,6 @@ public class CmsUser implements Serializable {
 	private String userName;
 	private String password;
 	private String email;
-	private String firstName;
-	private String lastName;
 
 	public CmsUser() {
 		super();
@@ -32,8 +30,6 @@ public class CmsUser implements Serializable {
 		this.userName = userName;
 		this.password = password;
 		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
 	}
 
 	public String getUserName() {
@@ -60,20 +56,10 @@ public class CmsUser implements Serializable {
 		this.email = email;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	@Override
+	public String toString() {
+		return "CmsUser [userName=" + userName + ", password=" + password
+				+ ", email=" + email + "]";
 	}
 
 }

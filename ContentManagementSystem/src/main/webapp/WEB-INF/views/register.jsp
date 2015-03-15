@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<%@page import="sun.reflect.generics.visitor.Reifier"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="stags" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form"%>
+<%@ page import="com.qk.cms.view.RegistrationStatus" %>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -10,6 +16,15 @@
 
     <script type="text/javascript" src="/ContentManagementSystem/resources/scripts/lib/jquery/jquery-2.1.3.min.js"></script>
     <script type="text/javascript" src="/ContentManagementSystem/resources/scripts/lib/bootstrap/js/bootstrap.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			//var status = "${status}";
+			//if (status === "<%=RegistrationStatus.INPUT%>") {				
+			//	alert("Input mode");
+			//}
+		});
+	</script>
 </head>
 <body>
 
@@ -40,54 +55,75 @@
 
 <!-- Registration form - START -->
 <div class="container">
+	<% 
+	RegistrationStatus status = (RegistrationStatus) request.getAttribute("status");	
+	if (RegistrationStatus.INPUT == status) { %>
     <div class="row">
-        <form role="form">
+        <sform:form role="form" action="register" modelAttribute="cmsUser">
             <div class="col-lg-6">
                 <div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Required Field</strong></div>
                 <div class="form-group">
-                    <label for="InputName">Enter Name</label>
+                    <label for="InputName">User Name</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="InputName" id="InputName" placeholder="Enter Name" required>
+                        <sform:input type="text" class="form-control" name="InputName" id="InputName" placeholder="User Name" required="true" path="userName"></sform:input>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="InputEmail">Enter Email</label>
+                    <label for="InputEmail">Email</label>
                     <div class="input-group">
-                        <input type="email" class="form-control" id="InputEmailFirst" name="InputEmail" placeholder="Enter Email" required>
+                        <sform:input type="email" class="form-control" id="InputEmailFirst" name="InputEmail" placeholder="Email" required="true" path="email"></sform:input>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="InputEmail">Confirm Email</label>
                     <div class="input-group">
-                        <input type="email" class="form-control" id="InputEmailSecond" name="InputEmail" placeholder="Confirm Email" required>
+                        <sform:input type="email" class="form-control" id="InputEmailSecond" name="InputEmail" placeholder="Confirm Email" required="true" path="email"></sform:input>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="InputMessage">Enter Message</label>
+                    <label for="InputEmail">Password</label>
                     <div class="input-group">
-                        <textarea name="InputMessage" id="InputMessage" class="form-control" rows="5" required></textarea>
+                        <sform:input type="password" class="form-control" id="InputPasswordFirst" name="InputPassword" placeholder="Password" required="true" path="password"></sform:input>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="InputEmail">Confirm Email</label>
+                    <div class="input-group">
+                        <sform:input type="password" class="form-control" id="InputPasswordSecond" name="InputPassword" placeholder="Confirm Password" required="true" path="password"></sform:input>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>                
                 <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right">
             </div>
-        </form>
+        </sform:form>
     </div>
+    	<% if (RegistrationStatus.ERROR == status) {%>
+	    <div class="row">    
+	    	<div class="col-lg-5 col-md-push-1" style="display:block">
+	            <div class="col-md-12">
+	                <div class="alert alert-danger">
+	                    <span class="glyphicon glyphicon-remove"></span><strong> Error! Please check all page inputs.</strong>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+		<% } %>    
+    <% }
+	else if (RegistrationStatus.SUCCESS == status) {%>
     <div class="row">    
     	<div class="col-lg-5 col-md-push-1" style="display:block">
             <div class="col-md-12">
                 <div class="alert alert-success">
-                    <strong><span class="glyphicon glyphicon-ok"></span> Success! Message sent.</strong>
-                </div>
-                <div class="alert alert-danger">
-                    <span class="glyphicon glyphicon-remove"></span><strong> Error! Please check all page inputs.</strong>
+                    <strong><span class="glyphicon glyphicon-ok"></span> You have Successfully registarted.</strong>
                 </div>
             </div>
         </div>
     </div>
+    <% } %>
 </div>
 <!-- Registration form - END -->
 

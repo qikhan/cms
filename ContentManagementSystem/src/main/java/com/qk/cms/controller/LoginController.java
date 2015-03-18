@@ -1,4 +1,4 @@
-package com.qk.cms.controllers;
+package com.qk.cms.controller;
 
 import java.util.Map;
 import java.util.concurrent.ExecutionException;

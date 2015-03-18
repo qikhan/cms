@@ -1,4 +1,4 @@
-package com.qk.cms.controllers;
+package com.qk.cms.controller;
 
 import javax.servlet.http.HttpSession;
 

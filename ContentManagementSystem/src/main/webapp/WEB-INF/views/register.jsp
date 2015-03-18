@@ -17,6 +17,12 @@
     <script type="text/javascript" src="/ContentManagementSystem/resources/scripts/lib/jquery/jquery-2.1.3.min.js"></script>
     <script type="text/javascript" src="/ContentManagementSystem/resources/scripts/lib/bootstrap/js/bootstrap.min.js"></script>
 
+	<style>
+	.fieldError {
+		  border-color : red;
+	}
+	
+	</style>
 	<script>
 		$(document).ready(function() {
 			//var status = "${status}";
@@ -24,6 +30,26 @@
 			//	alert("Input mode");
 			//}
 		});
+		
+		function confirmValidation($obj1, $obj2) {
+
+			 if($obj1.val() != $obj2.val()) {
+				if ($obj1.val() != "" || $obj2.val() != "") {
+					var label1 = $("label[for='" + $obj1.attr("id") + "']").text();
+					var label2 = $("label[for='" + $obj2.attr("id") + "']").text();
+					$obj1.addClass("fieldError");
+					$obj1.attr('title' , "Must match value of " + label2);
+					$obj2.addClass("fieldError");
+					$obj2.attr('title' , "Must match value of " + label1);
+				}	
+			}
+			else {
+				$obj1.removeClass("fieldError");
+				$obj1.attr('title', '');
+				$obj2.removeClass("fieldError");
+				$obj2.attr('title', '');
+			}
+		}
 	</script>
 </head>
 <body>
@@ -60,6 +86,17 @@
 	if (RegistrationStatus.INPUT == status) { %>
     <div class="row">
         <sform:form role="form" action="register" modelAttribute="cmsUser">
+        <% if (RegistrationStatus.ERROR == status) {%>
+		    <div class="row">    
+		    	<div class="col-lg-5 col-md-push-1" style="display:block">
+		            <div class="col-md-12">
+		                <div class="alert alert-danger">
+		                    <span class="glyphicon glyphicon-remove"></span><strong>Error! Please check all page inputs.</strong>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		<% } %>    
             <div class="col-lg-6">
                 <div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Required Field</strong></div>
                 <div class="form-group">
@@ -72,28 +109,32 @@
                 <div class="form-group">
                     <label for="InputEmail">Email</label>
                     <div class="input-group">
-                        <sform:input type="email" class="form-control" id="InputEmailFirst" name="InputEmail" placeholder="Email" required="true" path="email"></sform:input>
+                        <sform:input type="email" class="form-control" id="InputEmail" name="InputEmail" 
+                        placeholder="Email" required="true" path="email" onblur="confirmValidation($(this), $('#InputEmailConfirm'))"></sform:input>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="InputEmail">Confirm Email</label>
+                    <label for="InputEmailConfirm">Confirm Email</label>
                     <div class="input-group">
-                        <sform:input type="email" class="form-control" id="InputEmailSecond" name="InputEmail" placeholder="Confirm Email" required="true" path="email"></sform:input>
+                        <input type="email" class="form-control" id="InputEmailConfirm" name="InputEmail" 
+                        placeholder="Confirm Email" required onblur="confirmValidation($(this), $('#InputEmail'))"></input>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="InputEmail">Password</label>
+                    <label for="InputPassword">Password</label>
                     <div class="input-group">
-                        <sform:input type="password" class="form-control" id="InputPasswordFirst" name="InputPassword" placeholder="Password" required="true" path="password"></sform:input>
+                        <sform:input type="password" class="form-control" id="InputPassword" name="InputPassword" 
+                        placeholder="Password" required="true" path="password" onblur="confirmValidation($(this), $('#InputPasswordConfirm'))"></sform:input>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="InputEmail">Confirm Email</label>
+                    <label for="InputPasswordConfirm">Confirm Password</label>
                     <div class="input-group">
-                        <sform:input type="password" class="form-control" id="InputPasswordSecond" name="InputPassword" placeholder="Confirm Password" required="true" path="password"></sform:input>
+                        <input type="password" class="form-control" id="InputPasswordConfirm" name="InputPassword" 
+                        placeholder="Confirm Password" required onblur="confirmValidation($(this), $('#InputPassword'))"></input>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>                
@@ -101,17 +142,6 @@
             </div>
         </sform:form>
     </div>
-    	<% if (RegistrationStatus.ERROR == status) {%>
-	    <div class="row">    
-	    	<div class="col-lg-5 col-md-push-1" style="display:block">
-	            <div class="col-md-12">
-	                <div class="alert alert-danger">
-	                    <span class="glyphicon glyphicon-remove"></span><strong> Error! Please check all page inputs.</strong>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-		<% } %>    
     <% }
 	else if (RegistrationStatus.SUCCESS == status) {%>
     <div class="row">    

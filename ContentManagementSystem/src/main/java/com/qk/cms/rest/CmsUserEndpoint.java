@@ -30,7 +30,6 @@ public class CmsUserEndpoint {
 	@Consumes({ "application/xml", "application/json" })
 	@Path("/user")
 	public Response create(final CmsUser cmsuser) {
-		// TODO: process the given cmsuser
 		return Response.created(
 				UriBuilder.fromResource(CmsUser.class)
 						.path(String.valueOf(cmsuser.getUserName())).build())
@@ -42,14 +41,12 @@ public class CmsUserEndpoint {
 	@Consumes({ "application/xml", "application/json" })
 	public Response update(@PathParam("userName") String userName,
 			final CmsUser cmsuser) {
-		// TODO: process the given cmsuser
 		return Response.noContent().build();
 	}
 
 	@DELETE
 	@Path("/user/{userName}")
 	public Response delete(@PathParam("userName") final String userName) {
-		// TODO: process the cmsuser matching by the given id
 		return Response.noContent().build();
 	}
 
@@ -57,7 +54,6 @@ public class CmsUserEndpoint {
 	@Path("/user/{userName}")
 	@Produces({ "application/xml", "application/json" })
 	public Response find(@PathParam("userName") final String userName) {
-		// TODO: retrieve the cmsuser
 		CmsUser cmsuser = getCmsUser(userName);
 		if (cmsuser == null) {
 			return Response.status(Status.NOT_FOUND).build();

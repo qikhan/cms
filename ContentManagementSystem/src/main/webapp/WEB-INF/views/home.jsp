@@ -95,9 +95,8 @@
 	<div class="jumbotron">
 		<div class="container">
 			<h1>Hello, world!</h1>
-			<p>This is a template for a simple marketing or informational website. It includes a large callout
-				called a jumbotron and three supporting pieces of content. Use it as a starting point to create something
-				more unique.</p>
+			<p>Manage your content and publish them at ease. Enable targeted content push. Enable e-commerce on
+					any content.</p>
 			<p>
 				<a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a>
 			</p>

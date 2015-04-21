@@ -143,7 +143,7 @@
         </sform:form>
     </div>
     <% }
-	else if (RegistrationStatus.SUCCESS == status) {%>
+	else if (RegistrationStatus.SUCCESS == status) { %>
     <div class="row">    
     	<div class="col-lg-5 col-md-push-1" style="display:block">
             <div class="col-md-12">

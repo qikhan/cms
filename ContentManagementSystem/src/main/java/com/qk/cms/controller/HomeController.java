@@ -47,7 +47,7 @@ public class HomeController {
 			//
 		} catch (SessionNotFoundException e) {
 			//
-			logger.info("Session info available");
+			logger.info("Session info unavailable");
 		}
 
 		model.put("loginStyle", "btn-success");

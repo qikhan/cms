@@ -3,6 +3,7 @@ package com.qk.cms.doa;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -41,9 +42,10 @@ public class CmsUserDoaImpl implements CmsUserDoa {
 
 		List<CmsUser> users = new ArrayList<CmsUser>();
 
-		users = sessionFactory_.getCurrentSession()
-				.createQuery("from User where user_name=?")
-				.setParameter(0, username).list();
+		Session session = sessionFactory_.openSession();
+		Query query = session.createQuery("from CmsUser where userName=?")
+				.setParameter(0, username);
+		users = query.list();
 
 		if (users.size() > 0) {
 			return users.get(0);

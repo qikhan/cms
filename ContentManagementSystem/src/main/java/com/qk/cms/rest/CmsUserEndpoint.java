@@ -18,14 +18,21 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
-import com.qk.cms.doa.CmsUserDoaImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+
+import com.qk.cms.doa.CmsUserDoa;
 import com.qk.cms.entity.CmsUser;
+import com.qk.cms.service.ApplicationContextProvider;
 
 @Path("/")
 public class CmsUserEndpoint {
 
 	@Context
 	HttpServletRequest request;
+
+	@Autowired
+	private ApplicationContext appContext;
 
 	@POST
 	@Consumes({ "application/xml", "application/json" })
@@ -64,11 +71,14 @@ public class CmsUserEndpoint {
 	}
 
 	private CmsUser getCmsUser(final String userName) {
-		CmsUserDoaImpl cmsUserDoaImpl = new CmsUserDoaImpl();
-		CmsUser findByUserName = cmsUserDoaImpl.findByUserName(userName);
 
-		return new CmsUser(userName, userName + "XX", "qikhan@gmail.com",
-				"Quamrul", "Khan");
+		ApplicationContext applicationContext = ApplicationContextProvider
+				.getApplicationContext();
+
+		CmsUserDoa cmsUserDoa = applicationContext.getBean(CmsUserDoa.class);
+		CmsUser cmsUser = cmsUserDoa.findByUserName(userName);
+
+		return cmsUser;
 	}
 
 	@GET

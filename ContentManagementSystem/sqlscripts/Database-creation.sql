@@ -24,3 +24,5 @@ insert into user values('zunkhan', 'zaina', 'zunkhan@gmail.com');
 
 select * from user;
 
+
+

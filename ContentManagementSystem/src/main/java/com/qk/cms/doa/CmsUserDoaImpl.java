@@ -31,7 +31,7 @@ public class CmsUserDoaImpl implements CmsUserDoa {
 	@Override
 	public List<CmsUser> list() {
 		Session session = sessionFactory_.openSession();
-		List<CmsUser> userList = session.createQuery("from user").list();
+		List<CmsUser> userList = session.createQuery("from CmsUser").list();
 		session.close();
 		return userList;
 	}

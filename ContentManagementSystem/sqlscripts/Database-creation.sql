@@ -1,10 +1,15 @@
--- -----------
+-- Database creation -----------
 create database cms;
 use cms;
-create user 'khan'@'localhost' identified by password 'zaina';
-grant all privileges on cms.* to 'khan'@'localhost' with grant option;
--- drop user 'khan'
 
+-- User creation -----------
+create user 'khan'@'localhost' identified by password 'zaina';
+grant INSERT, SELECT, DELETE, UPDATE on cms.* to 'khan'@'localhost' identified by 'zaina';
+FLUSH PRIVILEGES;
+
+-- drop user 'khan'@'localhost'
+
+-- Table creation -----------
 create table user (
 
 	user_name varchar(30) not null,
@@ -15,6 +20,8 @@ create table user (
 );
 
 CREATE INDEX idx_user_email ON user (email);
+
+-- Data Insertion ---------
 
 insert into user values('qikhan', 'zaina', 'qikhan@gmail.com');
 insert into user values('zaikhan', 'zaina', 'zaikhan@gmail.com');

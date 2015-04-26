@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<%@page import="sun.reflect.generics.visitor.Reifier"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="stags" uri="http://www.springframework.org/tags"%>

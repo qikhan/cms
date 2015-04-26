@@ -18,7 +18,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import com.qk.cms.doa.CmsUserDoa;
@@ -31,13 +30,14 @@ public class CmsUserEndpoint {
 	@Context
 	HttpServletRequest request;
 
-	@Autowired
-	private ApplicationContext appContext;
+	ApplicationContext applicationContext = ApplicationContextProvider
+			.getApplicationContext();
 
 	@POST
 	@Consumes({ "application/xml", "application/json" })
 	@Path("/user")
 	public Response create(final CmsUser cmsuser) {
+
 		return Response.created(
 				UriBuilder.fromResource(CmsUser.class)
 						.path(String.valueOf(cmsuser.getUserName())).build())
@@ -71,9 +71,6 @@ public class CmsUserEndpoint {
 	}
 
 	private CmsUser getCmsUser(final String userName) {
-
-		ApplicationContext applicationContext = ApplicationContextProvider
-				.getApplicationContext();
 
 		CmsUserDoa cmsUserDoa = applicationContext.getBean(CmsUserDoa.class);
 		CmsUser cmsUser = cmsUserDoa.findByUserName(userName);

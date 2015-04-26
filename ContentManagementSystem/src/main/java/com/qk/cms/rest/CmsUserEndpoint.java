@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
+import com.qk.cms.doa.CmsUserDoaImpl;
 import com.qk.cms.entity.CmsUser;
 
 @Path("/")
@@ -63,6 +64,9 @@ public class CmsUserEndpoint {
 	}
 
 	private CmsUser getCmsUser(final String userName) {
+		CmsUserDoaImpl cmsUserDoaImpl = new CmsUserDoaImpl();
+		CmsUser findByUserName = cmsUserDoaImpl.findByUserName(userName);
+
 		return new CmsUser(userName, userName + "XX", "qikhan@gmail.com",
 				"Quamrul", "Khan");
 	}

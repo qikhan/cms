@@ -62,7 +62,6 @@ public class LoginController {
 	}
 
 	private boolean performAuthentication(LoginVo loginVo) {
-		// TODO query the DB to acquire authentication
 		CmsUser user = OLTPServiceManager.getInstance().getUser(
 				loginVo.getUserName());
 		if (user != null && user.getPassword().equals(loginVo.getPassword())) {

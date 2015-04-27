@@ -28,18 +28,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
  	-->
- 	<filter>
-	    <filter-name>IpFilterForRest</filter-name>
-	    <filter-class>com.qk.cms.filter.RestApiIPFilter</filter-class>
-	    <init-param>
-	        <param-name>IP_REGEX</param-name>
-	        <param-value>127\.0\.0\.\d+</param-value>
-	</init-param>
-	</filter>
-	<filter-mapping>
-	    <filter-name>IpFilterForRest</filter-name>
-	    <url-pattern>/rest/*</url-pattern>
-	</filter-mapping>
 	<!-- Processes application requests -->
 	<servlet>
 		<servlet-name>CMSPortal</servlet-name>
@@ -81,4 +69,18 @@
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
 	<!-- RESTeasy servlet configuration ENDS-->
+	<!--  Servlet Filter for all restful api -->
+	<filter>
+	    <filter-name>IpFilterForRest</filter-name>
+	    <filter-class>com.qk.cms.filter.RestApiIPFilter</filter-class>
+	    <init-param>
+	        <param-name>IP_REGEX</param-name>
+	        <param-value>127\.0\.0\.\d+</param-value>
+	</init-param>
+	</filter>
+	<filter-mapping>
+	    <filter-name>IpFilterForRest</filter-name>
+	    <url-pattern>/rest/*</url-pattern>
+	</filter-mapping>
+	
 </web-app>

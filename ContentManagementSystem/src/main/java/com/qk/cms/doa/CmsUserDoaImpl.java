@@ -3,28 +3,43 @@ package com.qk.cms.doa;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.qk.cms.entity.CmsUser;
 
 public class CmsUserDoaImpl implements CmsUserDoa {
 
 	private SessionFactory sessionFactory_;
+	private static final Logger logger = LoggerFactory
+			.getLogger(CmsUserDoaImpl.class);
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		sessionFactory_ = sessionFactory;
 	}
 
 	@Override
-	public void save(CmsUser user) {
-		Session session = sessionFactory_.openSession();
-		Transaction tx = session.beginTransaction();
-		session.persist(user);
-		tx.commit();
-		session.close();
+	public boolean save(CmsUser user) {
+		Session session = null;
+		try {
+			session = sessionFactory_.openSession();
+			Transaction tx = session.beginTransaction();
+			session.persist(user);
+			tx.commit();
+		} catch (HibernateException e) {
+			logger.error(e.getMessage());
+			return false;
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return true;
 	}
 
 	@SuppressWarnings("unchecked")

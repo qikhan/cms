@@ -1,5 +1,6 @@
 package com.qk.cms.rest;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +37,18 @@ public class CmsUserEndpoint {
 	@POST
 	@Consumes({ "application/xml", "application/json" })
 	@Path("/user")
-	public Response create(final CmsUser cmsuser) {
+	public Response create(final CmsUser cmsUser) {
+		// TODO: insert the cmsuser
+		CmsUserDoa cmsUserDoa = applicationContext.getBean(CmsUserDoa.class);
+		if (cmsUserDoa.save(cmsUser)) {
 
-		return Response.created(
-				UriBuilder.fromResource(CmsUser.class)
-						.path(String.valueOf(cmsuser.getUserName())).build())
-				.build();
+			String userName = cmsUser.getUserName();
+			UriBuilder uriBuilder = UriBuilder.fromResource(CmsUser.class);
+			URI uri = uriBuilder.path(String.valueOf(userName)).build();
+			return Response.created(uri).build();
+		}
+
+		return Response.status(Status.CONFLICT).build();
 	}
 
 	@PUT
@@ -49,12 +56,14 @@ public class CmsUserEndpoint {
 	@Consumes({ "application/xml", "application/json" })
 	public Response update(@PathParam("userName") String userName,
 			final CmsUser cmsuser) {
+		// TODO: update the cmsuser
 		return Response.noContent().build();
 	}
 
 	@DELETE
 	@Path("/user/{userName}")
 	public Response delete(@PathParam("userName") final String userName) {
+		// TODO: delete the cmsuser
 		return Response.noContent().build();
 	}
 

@@ -6,7 +6,7 @@ import com.qk.cms.entity.CmsUser;
 
 public interface CmsUserDoa {
 
-	public void save(CmsUser user);
+	public boolean save(CmsUser user);
 
 	public List<CmsUser> list();
 

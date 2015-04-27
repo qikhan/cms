@@ -26,7 +26,10 @@ public class RestApiIPFilter implements Filter {
 		this.config = filterConfig;
 		// optionally you can get regex from init parameter overwriting the
 		// class' private variable
-		IP_REGEX = config.getInitParameter("IP_REGEX");
+		String ipRegex = config.getInitParameter("IP_REGEX");
+		if (ipRegex != null && !ipRegex.isEmpty()) {
+			IP_REGEX = ipRegex;
+		}
 	}
 
 	@Override

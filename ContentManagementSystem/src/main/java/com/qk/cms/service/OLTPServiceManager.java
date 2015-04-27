@@ -7,6 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -34,11 +36,12 @@ public class OLTPServiceManager {
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "application/json");
 			int responseCode = conn.getResponseCode();
-			if (responseCode == 404 || responseCode == 204) {
+			if (responseCode == HttpServletResponse.SC_NOT_FOUND
+					|| responseCode == HttpServletResponse.SC_NO_CONTENT) {
 				return null;
 			}
 
-			if (responseCode == 200) {
+			if (responseCode == HttpServletResponse.SC_OK) {
 
 				BufferedReader br = new BufferedReader(new InputStreamReader(
 						(conn.getInputStream())));

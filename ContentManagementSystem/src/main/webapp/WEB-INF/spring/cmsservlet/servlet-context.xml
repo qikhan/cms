@@ -34,27 +34,19 @@
 	</beans:bean>
 
 	<context:component-scan base-package="com.qk.cms" />
+	
+	<context:property-placeholder location="classpath:CMS.properties" />
 
 	<!-- MySQL data source -->
 	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
  		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<beans:property name="url" value="jdbc:mysql://localhost:3306/cms" />
-		<beans:property name="username" value="root" />
-		<beans:property name="password" value="zaina" />
+		<beans:property name="username"><beans:value>${db.username}</beans:value></beans:property>
+        <beans:property name="password"><beans:value>${db.password}</beans:value></beans:property>
 	</beans:bean>
  
 	<!-- Hibernate session factory -->
-	<!--
-		-For in class annotation this is the configuration- 
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="annotatedClasses">
-            <list>
-                <value>com.qk.cms.entity.CmsUser</value>
-            </list>
-        </property> 
-	 -->
 	<beans:bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource" />

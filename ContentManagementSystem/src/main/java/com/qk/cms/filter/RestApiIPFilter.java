@@ -38,8 +38,9 @@ public class RestApiIPFilter implements Filter {
 
 		String ip = request.getRemoteAddr();
 		HttpServletResponse httpResp = null;
-		if (response instanceof HttpServletResponse)
+		if (response instanceof HttpServletResponse) {
 			httpResp = (HttpServletResponse) response;
+		}
 		if (ip.matches(IP_REGEX)) {
 			chain.doFilter(request, response);
 		} else {

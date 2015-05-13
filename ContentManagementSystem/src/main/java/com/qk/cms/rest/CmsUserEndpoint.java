@@ -21,6 +21,9 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.springframework.context.ApplicationContext;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.qk.cms.doa.CmsUserDoa;
 import com.qk.cms.entity.CmsUser;
 import com.qk.cms.service.ApplicationContextProvider;
@@ -28,11 +31,26 @@ import com.qk.cms.service.ApplicationContextProvider;
 @Path("/")
 public class CmsUserEndpoint {
 
+	private static LoadingCache<String, CmsUser> cachedCmsUsers_ = CacheBuilder
+			.newBuilder().maximumSize(1000)
+			.build(new CacheLoader<String, CmsUser>() {
+				@Override
+				public CmsUser load(String userName) throws Exception {
+					CmsUserDoa cmsUserDoa = applicationContext
+							.getBean(CmsUserDoa.class);
+					CmsUser cmsUser = cmsUserDoa.findByUserName(userName);
+					if (cmsUser == null) {
+						throw new CmsUserNotFoundException();
+					}
+					return cmsUser;
+				}
+			});
+
+	private static ApplicationContext applicationContext = ApplicationContextProvider
+			.getApplicationContext();
+
 	@Context
 	HttpServletRequest request;
-
-	ApplicationContext applicationContext = ApplicationContextProvider
-			.getApplicationContext();
 
 	@POST
 	@Consumes({ "application/xml", "application/json" })
@@ -80,11 +98,14 @@ public class CmsUserEndpoint {
 	}
 
 	private CmsUser getCmsUser(final String userName) {
-
-		CmsUserDoa cmsUserDoa = applicationContext.getBean(CmsUserDoa.class);
-		CmsUser cmsUser = cmsUserDoa.findByUserName(userName);
-
-		return cmsUser;
+		try {
+			return cachedCmsUsers_.getUnchecked(userName);
+		} catch (Exception e) {
+			if (e.getCause() instanceof CmsUserNotFoundException) {
+				return null;
+			}
+			throw e;
+		}
 	}
 
 	@GET

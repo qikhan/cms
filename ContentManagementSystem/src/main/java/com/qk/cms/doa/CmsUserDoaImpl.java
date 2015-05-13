@@ -58,8 +58,7 @@ public class CmsUserDoaImpl implements CmsUserDoa {
 		List<CmsUser> users = new ArrayList<CmsUser>();
 
 		Session session = sessionFactory_.openSession();
-		Query query = session.createQuery(
-				"SELECT userName, password FROM CmsUser WHERE userName=?")
+		Query query = session.createQuery("FROM CmsUser WHERE userName=?")
 				.setParameter(0, username);
 		users = query.list();
 

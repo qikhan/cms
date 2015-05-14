@@ -75,14 +75,14 @@
 
 <div class="page-header" style="display: block;">
     <h1>Welcome to CMS Registration</h1>
-    <small>Please fill all required field. You will receive an email confirmation.</small>
+    <small>Please fill all required field. You will receive an email confirmation on successful completion.</small>
 </div>
 
 <!-- Registration form - START -->
 <div class="container">
 	<% 
 	RegistrationStatus status = (RegistrationStatus) request.getAttribute("status");	
-	if (RegistrationStatus.INPUT == status) { %>
+	if (RegistrationStatus.INPUT == status || RegistrationStatus.ERROR == status) { %>
     <div class="row">
         <sform:form role="form" action="register" modelAttribute="cmsUser">
         <% if (RegistrationStatus.ERROR == status) {%>

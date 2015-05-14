@@ -18,7 +18,7 @@ public class OLTPServiceManager {
 
 	private static final String BASE_URL = "http://localhost:8080/";
 	private static final String APPLICATION = "ContentManagementSystem";
-	private static final String USER_ENDPOINT = "rest/user/";
+	private static final String USER_ENDPOINT = "rest/user";
 	private static OLTPServiceManager INSTANCE = new OLTPServiceManager();
 
 	public static OLTPServiceManager getInstance() {
@@ -31,7 +31,7 @@ public class OLTPServiceManager {
 		try {
 
 			URL url = new URL(BASE_URL + APPLICATION + "/" + USER_ENDPOINT
-					+ userName);
+					+ "/" + userName);
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "application/json");
@@ -68,5 +68,48 @@ public class OLTPServiceManager {
 			}
 		}
 		return null;
+	}
+
+	public boolean createUser(CmsUser user) {
+
+		HttpURLConnection conn = null;
+		try {
+
+			URL url = new URL(BASE_URL + APPLICATION + "/" + USER_ENDPOINT);
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("Accept", "application/json");
+			conn.setDoOutput(true);
+			Gson gson = new Gson();
+			String json = gson.toJson(user);
+			conn.getOutputStream().write(json.getBytes());
+			conn.getOutputStream().close();
+			int responseCode = conn.getResponseCode();
+			if (responseCode == HttpServletResponse.SC_CONFLICT) {
+				return false;
+			}
+
+			if (responseCode == HttpServletResponse.SC_CREATED) {
+				return true;
+			}
+
+			throw new RuntimeException("Failed : HTTP error code : "
+					+ responseCode);
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JsonSyntaxException e) {
+			e.printStackTrace();
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				conn.disconnect();
+			}
+		}
+		return false;
 	}
 }

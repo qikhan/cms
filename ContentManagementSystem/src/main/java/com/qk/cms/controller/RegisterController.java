@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qk.cms.entity.CmsUser;
+import com.qk.cms.service.OLTPServiceManager;
 import com.qk.cms.view.RegistrationStatus;
 
 /**
@@ -42,11 +43,19 @@ public class RegisterController {
 	public ModelAndView register(HttpSession session,
 			@ModelAttribute("cmsUser") CmsUser cmsUser) {
 
-		logger.info("CMS Registration processing.");
-
+		logger.info("CMS Registration processing." + cmsUser.toString());
 		ModelAndView modelAndView = new ModelAndView("register", "cmsUser",
-				new CmsUser());
-		modelAndView.getModelMap().put("status", RegistrationStatus.SUCCESS);
+				cmsUser);
+
+		OLTPServiceManager oltpServiceManager = OLTPServiceManager
+				.getInstance();
+		CmsUser user = oltpServiceManager.getUser(cmsUser.getUserName());
+		if (user != null || !oltpServiceManager.createUser(cmsUser)) {
+			modelAndView.getModelMap().put("status", RegistrationStatus.ERROR);
+		} else {
+			modelAndView.getModelMap()
+					.put("status", RegistrationStatus.SUCCESS);
+		}
 
 		return modelAndView;
 	}

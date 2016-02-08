@@ -4,27 +4,23 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.ws.rs.Path;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity implementation class for Entity: CmsUser
  *
  */
 @Entity
+@XmlRootElement(name = "user")
+@Path("/user")
 public class CmsUser implements Serializable {
 
 	private static final long serialVersionUID = -5309476787818180282L;
 	@Id
 	private String userName;
-	@NotEmpty
 	private String password;
-	@NotEmpty
 	private String email;
-	@NotEmpty
-	private String firstName;
-	@NotEmpty
-	private String lastName;
 
 	public CmsUser() {
 		super();
@@ -36,8 +32,6 @@ public class CmsUser implements Serializable {
 		this.userName = userName;
 		this.password = password;
 		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
 	}
 
 	public String getUserName() {
@@ -64,20 +58,10 @@ public class CmsUser implements Serializable {
 		this.email = email;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	@Override
+	public String toString() {
+		return "CmsUser [userName=" + userName + ", password=" + password
+				+ ", email=" + email + "]";
 	}
 
 }

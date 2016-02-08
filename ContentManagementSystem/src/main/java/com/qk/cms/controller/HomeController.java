@@ -1,4 +1,4 @@
-package com.qk.cms.controllers;
+package com.qk.cms.controller;
 
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -47,7 +47,7 @@ public class HomeController {
 			//
 		} catch (SessionNotFoundException e) {
 			//
-			logger.info("Session info available");
+			logger.info("Session info unavailable");
 		}
 
 		model.put("loginStyle", "btn-success");

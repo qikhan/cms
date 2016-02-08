@@ -1,4 +1,4 @@
-package com.qk.cms.controllers;
+package com.qk.cms.controller;
 
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.qk.cms.auth.SessionNotFoundException;
 import com.qk.cms.auth.UserSessionManager;
+import com.qk.cms.entity.CmsUser;
+import com.qk.cms.service.OLTPServiceManager;
 import com.qk.cms.vo.LoginVo;
 
 /**
@@ -43,25 +45,30 @@ public class LoginController {
 				new LoginVo());
 		Map<String, Object> model = modelAndView.getModel();
 		if (loginVo.getUserName().isEmpty() == false
-				&& loginVo.getPassword().isEmpty() == false) {
+				&& loginVo.getPassword().isEmpty() == false
+				&& performAuthentication(loginVo)) {
 
-			loginVo.setAuthValid(performAuthentication(loginVo));
-			loginVo.updateModel(model);
+			loginVo.setAuthValid(true);
 			UserSessionManager.getInstance().addUserSession(session.getId(),
 					loginVo);
 
 		} else {
 			model.put("loginMessage", "Invalid login information.");
 			model.put("loginStyle", "btn-danger");
-			model.put("login", loginVo);
 		}
+		loginVo.updateModel(model);
 
 		return modelAndView;
 	}
 
 	private boolean performAuthentication(LoginVo loginVo) {
-		// TODO query the DB to acquire authentication
-		return true;
+		CmsUser user = OLTPServiceManager.getInstance().getUser(
+				loginVo.getUserName());
+		if (user != null && user.getPassword().equals(loginVo.getPassword())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

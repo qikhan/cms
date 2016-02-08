@@ -31,6 +31,15 @@
 <script src="/ContentManagementSystem/resources/scripts/lib/bootstrap/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <!-- script src="/ContentManagementSystem/resources/scripts/lib/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>  -->
+<script>
+	$(document).ready(function() {
+
+		var authValid = "${authValid}";
+		if (authValid == "false") {
+			$(".navbar-header button").click();
+		}
+	});
+</script>
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -41,14 +50,15 @@
 					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Project name</a>
+				<a class="navbar-brand" href="#">CMS</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<c:choose>
-					<c:when test="${authValid ==null || authValid==false}">
+					<c:when test="${authValid==null || authValid==false}">
 						<sform:form class="navbar-form navbar-right" action="login" method="POST" modelAttribute="login">
 							<div class="form-group">
-								<sform:input type="text" placeholder="User Name" class="form-control" path="userName" value="${login.userName}"></sform:input>
+								<sform:input type="text" placeholder="User Name" class="form-control" path="userName"
+									value="${login.userName}"></sform:input>
 							</div>
 							<div class="form-group">
 								<sform:input type="password" placeholder="Password" class="form-control" path="password"></sform:input>
@@ -85,9 +95,8 @@
 	<div class="jumbotron">
 		<div class="container">
 			<h1>Hello, world!</h1>
-			<p>This is a template for a simple marketing or informational website. It includes a large callout
-				called a jumbotron and three supporting pieces of content. Use it as a starting point to create something
-				more unique.</p>
+			<p>Manage your content and publish them at ease. Enable targeted content push. Enable e-commerce on
+					any content.</p>
 			<p>
 				<a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a>
 			</p>
@@ -116,9 +125,14 @@
 		<hr>
 		<footer>
 			<div class="container">
-				<c:if test="${userName != null}">
-					<p>You are : ${userName}</p>
-				</c:if>
+				<c:choose>
+					<c:when test="${userName != null}">
+						<p>You are : ${userName}</p>
+					</c:when>
+					<c:otherwise>
+				        <a href="register">Register</a>
+				    </c:otherwise>
+				</c:choose>
 				<p>&copy; QK Learning by doing it!</p>
 			</div>
 		</footer>

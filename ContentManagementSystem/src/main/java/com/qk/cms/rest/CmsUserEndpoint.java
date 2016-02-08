@@ -1,9 +1,9 @@
 package com.qk.cms.rest;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,11 +19,35 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
-import com.qk.cms.entity.CmsUser;
+import org.springframework.context.ApplicationContext;
 
-@RequestScoped
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.qk.cms.doa.CmsUserDoa;
+import com.qk.cms.entity.CmsUser;
+import com.qk.cms.service.ApplicationContextProvider;
+
 @Path("/")
 public class CmsUserEndpoint {
+
+	private static LoadingCache<String, CmsUser> cachedCmsUsers_ = CacheBuilder
+			.newBuilder().maximumSize(1000)
+			.build(new CacheLoader<String, CmsUser>() {
+				@Override
+				public CmsUser load(String userName) throws Exception {
+					CmsUserDoa cmsUserDoa = applicationContext
+							.getBean(CmsUserDoa.class);
+					CmsUser cmsUser = cmsUserDoa.findByUserName(userName);
+					if (cmsUser == null) {
+						throw new CmsUserNotFoundException();
+					}
+					return cmsUser;
+				}
+			});
+
+	private static ApplicationContext applicationContext = ApplicationContextProvider
+			.getApplicationContext();
 
 	@Context
 	HttpServletRequest request;
@@ -31,12 +55,18 @@ public class CmsUserEndpoint {
 	@POST
 	@Consumes({ "application/xml", "application/json" })
 	@Path("/user")
-	public Response create(final CmsUser cmsuser) {
-		// TODO: process the given cmsuser
-		return Response.created(
-				UriBuilder.fromResource(CmsUser.class)
-						.path(String.valueOf(cmsuser.getUserName())).build())
-				.build();
+	public Response create(final CmsUser cmsUser) {
+		// TODO: insert the cmsuser
+		CmsUserDoa cmsUserDoa = applicationContext.getBean(CmsUserDoa.class);
+		if (cmsUserDoa.save(cmsUser)) {
+
+			String userName = cmsUser.getUserName();
+			UriBuilder uriBuilder = UriBuilder.fromResource(CmsUser.class);
+			URI uri = uriBuilder.path(String.valueOf(userName)).build();
+			return Response.created(uri).build();
+		}
+
+		return Response.status(Status.CONFLICT).build();
 	}
 
 	@PUT
@@ -44,14 +74,14 @@ public class CmsUserEndpoint {
 	@Consumes({ "application/xml", "application/json" })
 	public Response update(@PathParam("userName") String userName,
 			final CmsUser cmsuser) {
-		// TODO: process the given cmsuser
+		// TODO: update the cmsuser
 		return Response.noContent().build();
 	}
 
 	@DELETE
 	@Path("/user/{userName}")
 	public Response delete(@PathParam("userName") final String userName) {
-		// TODO: process the cmsuser matching by the given id
+		// TODO: delete the cmsuser
 		return Response.noContent().build();
 	}
 
@@ -59,17 +89,23 @@ public class CmsUserEndpoint {
 	@Path("/user/{userName}")
 	@Produces({ "application/xml", "application/json" })
 	public Response find(@PathParam("userName") final String userName) {
-		// TODO: retrieve the cmsuser
 		CmsUser cmsuser = getCmsUser(userName);
 		if (cmsuser == null) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
+
 		return Response.ok(cmsuser).build();
 	}
 
 	private CmsUser getCmsUser(final String userName) {
-		return new CmsUser(userName, "qikhan", "qikhan@gmail.com", "Quamrul",
-				"Khan");
+		try {
+			return cachedCmsUsers_.getUnchecked(userName);
+		} catch (Exception e) {
+			if (e.getCause() instanceof CmsUserNotFoundException) {
+				return null;
+			}
+			throw e;
+		}
 	}
 
 	@GET
